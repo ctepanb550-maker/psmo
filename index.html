@@ -1,0 +1,746 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Для тебя ❤️</title>
+
+<style>
+* { box-sizing: border-box; }
+
+:root {
+  --bg: #fff0ed;
+  --red: #a92f43;
+  --gold: #d6a64c;
+  --paper: #fffaf0;
+}
+
+body {
+  margin: 0;
+  width: 100%;
+  height: 100vh;
+  height: 100dvh;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 42%, #fffaf5 0%, transparent 67%),
+    var(--bg);
+  font-family: Georgia, serif;
+  color: #74313d;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1 {
+  position: absolute;
+  top: 6%;
+  width: 100%;
+  text-align: center;
+  font-size: clamp(27px, 7vw, 39px);
+  font-weight: normal;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 12px #d98b9635;
+}
+
+.subtitle {
+  position: absolute;
+  top: 16%;
+  width: 100%;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  color: #a66b72;
+  padding: 0 15px;
+}
+
+.counter {
+  position: absolute;
+  top: 24%;
+  width: 100%;
+  text-align: center;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  color: #b77d84;
+}
+
+/* КОНВЕРТ */
+
+.envelope {
+  position: absolute;
+  width: min(76vw, 310px);
+  height: 190px;
+  left: 50%;
+  top: 51%;
+  transform: translate(-50%, -50%);
+  perspective: 900px;
+  z-index: 2;
+}
+
+.env-back {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(145deg, #c75d6c, #a93e50);
+  border-radius: 7px;
+  box-shadow: 0 16px 35px #74313d35;
+}
+
+.letter {
+  position: absolute;
+  left: 5%;
+  top: 8px;
+  width: 90%;
+  height: 175px;
+  background: var(--paper);
+  border-radius: 5px;
+  padding: 19px 17px;
+  z-index: 2;
+  transform: translateY(35px);
+  transition:
+    transform 1.5s cubic-bezier(.2,.8,.2,1),
+    height 1s ease;
+  overflow: hidden;
+  box-shadow: 0 2px 10px #00000012;
+}
+
+.letter.open {
+  transform: translateY(-155px);
+  height: auto;
+  min-height: 190px;
+  max-height: 65vh;
+  max-height: 65dvh;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: #d9a4a7 transparent;
+}
+
+.letter-title {
+  font-size: 21px;
+  text-align: center;
+  margin-bottom: 17px;
+  color: var(--red);
+}
+
+.letter-title::after {
+  content: "✦";
+  display: block;
+  font-size: 14px;
+  margin-top: 7px;
+  color: var(--gold);
+}
+
+.letter-text {
+  font-family: Georgia, serif;
+  font-size: 15px;
+  line-height: 1.75;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  color: #60434a;
+  min-height: 70px;
+  user-select: text;
+}
+
+.letter-text strong {
+  color: #a92f43;
+  font-weight: bold;
+}
+
+.letter-text em {
+  color: #a66b72;
+  font-style: italic;
+}
+
+.letter-sign {
+  text-align: right;
+  margin-top: 20px;
+  padding-bottom: 12px;
+  color: #a92f43;
+  font-style: italic;
+  font-size: 17px;
+}
+
+.env-front {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  background: linear-gradient(145deg, #e28c94, #c75d6c);
+  clip-path: polygon(0 0, 50% 55%, 100% 0, 100% 100%, 0 100%);
+  border-radius: 7px;
+}
+
+.env-flap {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(145deg, #f0b0b3, #dc8993);
+  clip-path: polygon(0 0, 100% 0, 50% 58%);
+  transform-origin: top center;
+  transition: transform 1s ease;
+  z-index: 5;
+}
+
+.envelope.open .env-flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.seal {
+  position: absolute;
+  z-index: 6;
+  left: 50%;
+  top: 48%;
+  transform: translate(-50%, -50%);
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #f5d98b, #b77d31 75%);
+  box-shadow: 0 3px 9px #713b3345;
+  display: grid;
+  place-items: center;
+  color: #fff5d8;
+  font-size: 24px;
+  transition: opacity .5s, transform .5s;
+}
+
+.envelope.open .seal {
+  opacity: 0;
+  transform: translate(-50%, -50%) scale(0);
+}
+
+/* ГУСЬ */
+
+.goose {
+  position: absolute;
+  width: 125px;
+  height: 115px;
+  left: 10px;
+  top: 69%;
+  z-index: 10;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition:
+    left 1s cubic-bezier(.2,.8,.2,1),
+    top
+
+
+1s cubic-bezier(.2,.8,.2,1),
+    transform .3s;
+}
+
+.goose svg {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  filter: drop-shadow(0 5px 3px #60434a22);
+}
+
+.goose.running svg {
+  animation: bounce .22s infinite alternate;
+}
+
+@keyframes bounce {
+  from { transform: translateY(0) rotate(-3deg); }
+  to { transform: translateY(-7px) rotate(3deg); }
+}
+
+.goose .leg {
+  transform-box: fill-box;
+  transform-origin: top center;
+}
+
+.goose.running .leg-one {
+  animation: leg .2s infinite alternate;
+}
+
+.goose.running .leg-two {
+  animation: leg .2s infinite alternate-reverse;
+}
+
+@keyframes leg {
+  from { transform: rotate(-25deg); }
+  to { transform: rotate(25deg); }
+}
+
+.goose-message {
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  background: white;
+  color: #91424e;
+  padding: 8px 12px;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px #00000012;
+  opacity: 0;
+  transition: opacity .2s;
+  pointer-events: none;
+}
+
+.goose-message.show {
+  opacity: 1;
+}
+
+/* НИЖНЯЯ ПОДСКАЗКА */
+
+.hint {
+  position: absolute;
+  bottom: 7%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  padding: 0 18px;
+  font-family: system-ui, sans-serif;
+  font-size: 14px;
+  color: #a66b72;
+}
+
+/* ЧАСТИЦЫ */
+
+.particle {
+  position: fixed;
+  pointer-events: none;
+  z-index: 20;
+  animation: fly 1.7s ease-out forwards;
+  font-size: 20px;
+}
+
+@keyframes fly {
+  to {
+    transform:
+      translate(var(--dx), var(--dy))
+      rotate(180deg) scale(.2);
+    opacity: 0;
+  }
+}
+
+max-height: 570px {
+  .envelope {
+    top: 54%;
+    transform: translate(-50%, -50%) scale(.8);
+  }
+
+  h1 { top: 2%; }
+  .subtitle { top: 12%; }
+  .counter { top: 20%; }
+  .hint { bottom: 2%; }
+}
+</style>
+</head>
+
+<body>
+
+<h1>Для тебя ❤️</h1>
+
+<div class="subtitle">
+  Кажется, тут кое-кто охраняет письмо...
+</div>
+
+<div class="counter" id="counter">
+  Попробуй договориться с охранником
+</div>
+
+<div class="envelope" id="envelope">
+
+  <div class="env-back"></div>
+
+  <div class="letter" id="letter">
+
+    <div class="letter-title">
+      Небольшое послание
+    </div>
+
+    <div class="letter-text" id="letterText"></div>
+
+    <div class="letter-sign" id="letterSign"></div>
+
+  </div>
+
+  <div class="env-front"></div>
+  <div class="env-flap"></div>
+
+  <div class="seal">♥</div>
+
+</div>
+
+<!-- ГУСЬ -->
+
+<div class="goose" id="goose">
+
+  <div class="goose-message" id="gooseMessage">
+    ГА! Не трогать!
+  </div>
+
+  <svg viewBox="0 0 140 120"
+       xmlns="http://www.w3.org/2000/svg">
+
+    <ellipse cx="67" cy="76" rx="43" ry="27"
+      fill="#fffdf6" stroke="#ded8cd" stroke-width="2"/>
+
+    <path d="M45 69 Q60 52 90 72 Q74 91 49 86 Z"
+      fill="#f0ece3" stroke="#ded8cd" stroke-width="1.5"/>
+
+    <path d="M105 72 L125 62 L116 83 Z"
+      fill="#fffdf6" stroke="#ded8cd" stroke-width="2"/>
+
+    <path d="M48 72 Q35 51 49 27 Q54 17 68 22
+      Q77 28 66 39 Q55 51 65 69"
+      fill="#fffdf6" stroke="#ded8cd" stroke-width="2"/>
+
+    <circle cx="62" cy="23" r="17"
+      fill="#fffdf6" stroke="#ded8cd" stroke-width="2"/>
+
+    <path d="M76 22 L96 28 L76 33 Z"
+      fill="#ed9a39" stroke="#d47d26" stroke-width="1"/>
+
+    <circle cx="68" cy="18" r="2.7" fill="#332b29"/>
+    <circle cx="69" cy="17" r=".8" fill="white"/>
+
+    <circle cx="75" cy="30" r="4"
+      fill="#f4b7b1" opacity=".7"/>
+
+    <g class="leg leg-one">
+      <path d="M55 96 L53 108 L43 111 L56 112 L63 109"
+        fill="none" stroke="#ed9a39" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+    <g class="leg leg-two">
+      <path d="M81 96 L84 108 L94 111 L81 112 L76 109"
+        fill="none" stroke="#ed9a39" stroke-width="4"
+        stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+
+  </svg>
+</div>
+
+<div class="hint" id="hint">
+  Поймай гуся. Он явно что-то замышляет 🪿
+</div>
+
+<script>
+
+// ======================================
+// ПИСЬМО
+// ======
+
+
+ext = `
+Пускай сегодня небо хмурит брови,
+И пусть не удается всё с утра.
+Ты знаешь, <em>я всегда прийти готовый</em>,
+Когда тебе хоть капельку пора.
+
+Пора тепла, заботы и покоя,
+Пора забыть про суету и бег.
+Я подарю тебе простое и большое:
+<strong>Я просто рядом, я твой человек.</strong>
+
+Не думай, что должна быть идеальной,
+Не прячь свою усталость за улыбкой.
+<em>Ты можешь быть смешной и нереальной,</em>
+И можешь ошибаться — это пылью.
+
+Сотрется всё: обиды и тревоги,
+Останется лишь то, что между нами.
+Ты отдохни, не думай о дорогах,
+<em>Согрейся этими простыми словами.</em>
+
+А если снова станет очень сложно,
+<strong>Открой конверт</strong>, где спрятан этот стих.
+Я рядом. И теперь это надежно.
+<strong>Я очень сильно ценю тебя и нас двоих.</strong>
+`;
+
+const signature = "Твоя подпись ❤️";
+
+// ======================================
+// МЕХАНИКА
+// ======================================
+
+const goose = document.getElementById('goose');
+const gooseMessage = document.getElementById('gooseMessage');
+const envelope = document.getElementById('envelope');
+const letter = document.getElementById('letter');
+const letterTextElement = document.getElementById('letterText');
+const letterSign = document.getElementById('letterSign');
+const counter = document.getElementById('counter');
+const hint = document.getElementById('hint');
+
+let hits = 0;
+let opened = false;
+let moving = false;
+
+const goosePhrases = [
+  "ГА! Не трогать!",
+  "Отойди от письма!",
+  "Ну всё, достал!",
+  "Кря... то есть ГА!",
+  "Я тут главный!"
+];
+
+// ======================================
+// ПЕРЕМЕЩЕНИЕ ГУСЯ
+// ======================================
+
+function moveGoose() {
+  if (opened || moving) return;
+
+  const maxX = Math.max(10, window.innerWidth - 140);
+  const maxY = Math.max(150, window.innerHeight - 150);
+
+  const x = 10 + Math.random() * (maxX - 10);
+  const y = 120 + Math.random() * (maxY - 120);
+
+  goose.classList.add('running');
+
+  const currentX = parseFloat(goose.style.left || 10);
+
+  goose.style.transform =
+    x < currentX ? 'scaleX(-1)' : 'scaleX(1)';
+
+  goose.style.left = x + 'px';
+  goose.style.top = y + 'px';
+
+  setTimeout(() => {
+    goose.classList.remove('running');
+  }, 1050);
+}
+
+// ======================================
+// РЕАКЦИИ ГУСЯ
+// ======================================
+
+function showGooseMessage(text) {
+  gooseMessage.textContent = text;
+  gooseMessage.classList.add('show');
+
+  setTimeout(() => {
+    gooseMessage.classList.remove('show');
+  }, 1300);
+}
+
+function gooseTap(event) {
+  event.preventDefault();
+
+  if (opened || moving) return;
+
+  hits++;
+
+  showGooseMessage(
+    goosePhrases[Math.min(hits - 1, goosePhrases.length - 1)]
+  );
+
+  if (hits < 3) {
+
+    counter.textContent =
+      `Попытки поймать гуся: ${hits} из 3`;
+
+    moveGoose();
+
+  } else {
+
+    counter.textContent =
+      "Гусь принял важное решение...";
+
+    hint.textContent =
+      "Кажется, он всё-таки согласился ❤️";
+
+    moving = true;
+    openByGoose();
+  }
+}
+
+// ======================================
+// ГУСЬ ОТКРЫВАЕТ КОНВЕРТ
+// ======================================
+
+function openByGoose() {
+
+  goose.classList.add('running');
+
+  const x = window.innerWidth / 2 - 65;
+  const y = window.innerHeight / 2 + 85;
+
+  goose.style.transform = 'scaleX(1)';
+  goose.style.left = x + 'px';
+  goose.style.top = y + 'px';
+
+  setTimeout(() => {
+
+    goose.classList.remove('running');
+
+    showGooseMessage(
+      "Ладно... держи письмо ❤️"
+    );
+
+    setTimeout(openEnvelope, 700);
+
+  }, 1100);
+}
+
+// ======================================
+// ОТКРЫТИЕ ПИСЬМА
+// ======================================
+
+function openEnvelope() {
+
+  if (opened) return;
+
+  opened = true;
+
+  envelope.classList.add('open');
+  letter.classList.add('open');
+
+  counter.textContent = "Письмо доставлено!";
+  hint.textContent = "Гусь выполнил свою миссию 🪿";
+
+  createParticles();
+
+  setTimeout(typeLetter, 1200);
+}
+
+// ======================================
+// ПЕЧАТЬ ТЕКСТА С СОХРАНЕНИЕМ
+// ЖИРНОГО ШРИФТА И КУРСИВА
+// ===
+
+
+===================================
+
+function typeLetter() {
+
+  letterTextElement.replaceChildren();
+  letterSign.textContent = "";
+
+  const template = document.createElement('template');
+  template.innerHTML = letterText;
+
+  letterTextElement.appendChild(template.content);
+
+  const walker = document.createTreeWalker(
+    letterTextElement,
+    NodeFilter.SHOW_TEXT
+  );
+
+  const nodes = [];
+  let node;
+
+  while (node = walker.nextNode()) {
+
+    nodes.push([node, node.textContent]);
+
+    node.textContent = "";
+  }
+
+  let nodeIndex = 0;
+  let charIndex = 0;
+
+  function typeNext() {
+
+    if (nodeIndex >= nodes.length) {
+
+      setTimeout(() => {
+
+        letterSign.textContent = signature;
+
+        createParticles();
+
+      }, 500);
+
+      return;
+    }
+
+    const [currentNode, originalText] =
+      nodes[nodeIndex];
+
+    currentNode.textContent +=
+      originalText[charIndex];
+
+    charIndex++;
+
+    if (charIndex >= originalText.length) {
+
+      nodeIndex++;
+      charIndex = 0;
+    }
+
+    letter.scrollTop = letter.scrollHeight;
+
+    setTimeout(typeNext, 35);
+  }
+
+  typeNext();
+}
+
+// ======================================
+// СЕРДЕЧКИ И ЧАСТИЦЫ
+// ======================================
+
+function createParticles() {
+
+  const symbols = [
+    "❤️", "💗", "✨", "🌸", "💕", "💖"
+  ];
+
+  for (let i = 0; i < 28; i++) {
+
+    const p = document.createElement('div');
+
+    p.className = 'particle';
+
+    p.textContent =
+      symbols[Math.floor(Math.random() * symbols.length)];
+
+    p.style.left =
+      (window.innerWidth / 2) + 'px';
+
+    p.style.top =
+      (window.innerHeight / 2) + 'px';
+
+    p.style.setProperty(
+      '--dx',
+      (Math.random() - 0.5) * 420 + 'px'
+    );
+
+    p.style.setProperty(
+      '--dy',
+      (Math.random() - 0.5) * 420 + 'px'
+    );
+
+    document.body.appendChild(p);
+
+    setTimeout(() => p.remove(), 1800);
+  }
+}
+
+// ======================================
+// ЗАПУСК
+// ======================================
+
+goose.addEventListener('pointerdown', gooseTap);
+
+// Гусь иногда самостоятельно гуляет.
+
+setInterval(() => {
+
+  if (!opened && !moving && Math.random() > 0.45) {
+    moveGoose();
+  }
+
+}, 3500);
+
+window.addEventListener('resize', () => {
+
+  if (!opened && !moving) {
+    moveGoose();
+  }
+
+});
+
+</script>
+
+</body>
+</html>
